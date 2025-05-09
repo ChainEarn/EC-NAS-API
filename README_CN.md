@@ -1,6 +1,3 @@
----
-
-````markdown
 # EC-NAS Gateway API
 
 本仓库是 **EC-NAS 的 Gateway API 服务**，基于 [OpenResty](https://openresty.org/) 构建，主要用于为 EC-NAS-GUI 提供 API 接口调用能力，并对接底层存储服务，起到网关和服务中转的作用。
@@ -88,6 +85,5 @@ EC-NAS-Gateway-API/
 
 如有问题或建议，欢迎提交 [Issue](https://github.com/ChainEarn/EC-NAS-API/issues) 或发起 Pull Request！
 
-```
 
----
+

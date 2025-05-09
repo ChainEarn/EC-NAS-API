@@ -1,6 +1,3 @@
----
-
-````markdown
 # EC-NAS Gateway API
 
 This repository contains the **Gateway API service for EC-NAS**, built on top of [OpenResty](https://openresty.org/).  
@@ -89,6 +86,5 @@ This project is licensed under the MIT License.
 
 Feel free to open an [issue](https://github.com/ChainEarn/EC-NAS-API/issues) or submit a pull request if you have any questions or suggestions.
 
-```
 
----
+
