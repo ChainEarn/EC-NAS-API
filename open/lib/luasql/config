@@ -17,12 +17,23 @@ ifeq ($(UNAME_S),Darwin) # MacOS
 else # Linux/BSD
 	LIB_OPTION ?= -shared
 endif
+# linux OS dependent
+OS_ID := $(shell grep -oP '^ID=\K.*' /etc/os-release)
+ifeq ($(OS_ID), ubuntu)
+	CFLAGS = -DUBUNTU
+else
+	CFLAGS = -DLINUX
+endif
 
 # driver specific params
 # - MySQL
 #DRIVER_LIBS_mysql ?= -L/usr/local/mysql/lib -lmysqlclient -lz
 #DRIVER_INCS_mysql ?= -I/usr/local/mysql/include
-DRIVER_LIBS_mysql ?= -L/usr/lib -lmysqlclient -lluajit-5.1 -lz
+ifeq ($(OS_ID), ubuntu)
+	DRIVER_LIBS_mysql ?= -L/usr/lib -lmariadbclient -lluajit-5.1 -lz
+else
+	DRIVER_LIBS_mysql ?= -L/usr/lib -lmysqlclient -lluajit-5.1 -lz
+endif
 DRIVER_INCS_mysql ?= -I/usr/include/mysql
 # - Oracle OCI8
 DRIVER_LIBS_oci8 ?= -L/home/oracle/OraHome1/lib -lz -lclntsh
@@ -50,5 +61,5 @@ DRIVER_INCS_firebird ?=
 WARN= -fPIC $(OPTFLAGS) -Wmissing-prototypes -Wmissing-declarations -ansi -pedantic
 INCS = -I$(LUA_INC)
 DEFS = -std=gnu99 -fPIC
-CFLAGS=$(WARN) $(DRIVER_INCS) $(INCS) -DLUASQL_VERSION_NUMBER='"$V"' $(DEFS)
+CFLAGS+=$(WARN) $(DRIVER_INCS) $(INCS) -DLUASQL_VERSION_NUMBER='"$V"' $(DEFS)
 CC= gcc

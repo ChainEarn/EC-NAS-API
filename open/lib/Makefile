@@ -3,7 +3,8 @@ BASE_OBJ = lualog.so \
       cutils.so \
       socket.so \
       luasql.so \
-      conhash.so
+      conhash.so \
+      lfs.so
 OBJ += $(BASE_OBJ)
 #OBJ +=  \
 	zlib.so \
@@ -28,7 +29,8 @@ cutils.so:
 
 socket.so:
 	$(MAKE) -C $(LIB_DIR)/luasocket
-	mv $(LIB_DIR)/luasocket/src/socket.so.3.0-rc1  $(LIB_DIR)/$@
+	mv $(LIB_DIR)/luasocket/src/socket-3.1.0.so $(LIB_DIR)/$@
+	cp $(LIB_DIR)/luasocket/src/socket.lua $(LIB_DIR)/
 
 zlib.so:
 	$(MAKE) -C $(LIB_DIR)/lua-zlib linux
@@ -52,6 +54,11 @@ cjson.so:
 conhash.so:
 	$(MAKE) -C $(LIB_DIR)/libconhash
 	mv $(LIB_DIR)/libconhash/bin/$@ $(LIB_DIR)
+
+lfs.so:
+	cp luafilesystem.config luafilesystem/config
+	$(MAKE) -C $(LIB_DIR)/luafilesystem
+	mv $(LIB_DIR)/luafilesystem/src/$@ $(LIB_DIR)
 
 luasql.so:
 	# git clone https://github.com/lunarmodules/luasql.git
@@ -93,16 +100,17 @@ zklua.so:
 
 clean:
 	rm -rf ./*.so
-	$(MAKE) -C $(LIB_DIR)/lua-cjson-2.1.0 clean
-	$(MAKE) -C $(LIB_DIR)/luasql-master clean
+	#$(MAKE) -C $(LIB_DIR)/lua-cjson-2.1.0 clean
+	$(MAKE) -C $(LIB_DIR)/luasql clean
 	$(MAKE) -C $(LIB_DIR)/libconhash clean
 	$(MAKE) -C $(LIB_DIR)/luasocket clean
-	$(MAKE) -C $(LIB_DIR)/lua-zmq clean
-	$(MAKE) -C $(LIB_DIR)/lua-http-message clean
+	#$(MAKE) -C $(LIB_DIR)/lua-zmq clean
+	#$(MAKE) -C $(LIB_DIR)/lua-http-message clean
 	$(MAKE) -C $(LIB_DIR)/lua-log clean
-	$(MAKE) -C $(LIB_DIR)/zklua clean
-	cd ./lua-zlib && make clean
-	cd ./Lua-bit32 && make clean
+	#$(MAKE) -C $(LIB_DIR)/zklua clean
+	$(MAKE) -C $(LIB_DIR)/luafilesystem clean
+	#cd ./lua-zlib && make clean
+	#cd ./Lua-bit32 && make clean
 	-if [ -d ./build ];then rm -rf ./build; fi
 	-if [ -d ./polarssl-1.2.8 ];then rm -rf ./polarssl-1.2.8; fi
 

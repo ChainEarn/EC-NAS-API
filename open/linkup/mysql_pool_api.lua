@@ -71,6 +71,7 @@ end
 
 -->>SELECT = "table"
 -->>INSERT = "number"
+-->>DELETE = "number"
 -->>UPDATE = "number"
 -->>AFFAIRS = "boolean"
 -->>SQL_ERR = "nil"
@@ -83,6 +84,11 @@ local function mysql_api_execute(db, sql)
 		only.log("E", "FAIL TO DO: " .. sql)
 
 		local break_conn = string.find(err, "LuaSQL%:%serror%sexecuting%squery%.%sMySQL%:%sMySQL%sserver%shas%sgone%saway")
+		if break_conn then
+			assert(false, tostring(err))
+		end
+
+		local break_conn = string.find(err, "LuaSQL%:%serror%sexecuting%squery%.%sMySQL%:%sServer%shas%sgone%saway")
 		if break_conn then
 			assert(false, tostring(err))
 		end
@@ -124,6 +130,17 @@ local function mysql_api_procedure(db, sql)
 		if break_conn then
 			assert(false, tostring(err))
 		end
+
+		local break_conn = string.find(err, "LuaSQL%:%serror%sexecuting%squery%.%sMySQL%:%sServer%shas%sgone%saway")
+		if break_conn then
+			assert(false, tostring(err))
+		end
+
+		local break_conn = string.find(err, "LuaSQL%:%serror%sexecuting%squery%.%sMySQL%:%sDeadlock%sfound%swhen%strying%sto%sget%slock%;%stry%srestarting%stransaction")
+		if break_conn then
+			assert(false, tostring(err))
+		end
+		
 		return nil
 	end
 	if type(res) == "number" then
@@ -183,6 +200,7 @@ local function mysql_cmd(sqlname, cmds, ...)
 	local mysql_api_list = {
 		SELECT = mysql_api_execute,
 		INSERT = mysql_api_execute,
+		DELETE = mysql_api_execute,
 		UPDATE = mysql_api_execute,
 		REPLACE = mysql_api_execute,
 		AFFAIRS = mysql_api_commit,

@@ -1,0 +1,10 @@
+[Unit]
+Description=Omstor Setup Script
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/boot-setup.sh
+
+[Install]
+WantedBy=multi-user.target

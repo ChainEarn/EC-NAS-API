@@ -15,8 +15,13 @@
 #define NO_CLIENT_LONG_LONG
 #endif
 
+#ifdef UBUNTU
+#include "mariadb/mysql.h"
+#include "mariadb/errmsg.h"
+#else
 #include "mysql.h"
 #include "errmsg.h"
+#endif
 
 #include "lua.h"
 #include "lauxlib.h"
