@@ -30,8 +30,10 @@ local function handle()
 	if not uuid or not fstype then
 		local cmd = string.format([[/usr/bin/csdo /usr/sbin/parted -s /dev/%s unit s print |/usr/bin/grep -E '^ ?[1-9]+' |/usr/bin/awk '{print $1}' | while read PART; do /usr/bin/echo "Removing partition $PART on %s"; /usr/sbin/parted -s %s rm $PART; done]], dev, dev, dev)
 		os.execute(cmd)
-		os.execute("/usr/bin/csdo /usr/sbin/mkfs.xfs -f /dev/" .. dev)
+		os.execute("/usr/bin/csdo /usr/sbin/mkfs.xfs -f -s size=4096 /dev/" .. dev)
+		os.execute("/usr/bin/udevadm trigger")
 		uuid = SM_utils.get_disk_uuid(dev)
+		fstype = SM_utils.get_disk_fstype(dev)
 	end
 
 	local res = SM_utils.get_one_disk(dev)
@@ -40,7 +42,7 @@ local function handle()
 		gosay.out_message(MSG.fmt_err_message("MSG_ERROR_SYSTEM"))
 		return
 	end
-	local sql = string.format(sql_fmt["disk_append"], uuid, res["model"] or "", res["vendor"] or "", res["serial"] or "", res["wwn"] or "", res["size"] or "", res["fstype"] or "", "data")
+	local sql = string.format(sql_fmt["disk_append"], uuid, res["model"], res["vendor"], res["serial"], res["wwn"], res["size"], fstype or res["fstype"], "data")
 	local ok, res = mysql_api.cmd('omstor___omstor_db', 'INSERT', sql)
 	if not ok then
 		only.log('E','insert mysql failed!')

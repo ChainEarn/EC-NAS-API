@@ -28,13 +28,20 @@
 ### 返回body示例
 
 * 失败: `{"ERRORCODE":10001, "RESULT":"internal error!"}`
-* 成功: `{"ERRORCODE":0,"RESULT":"ok!"}`
+* 成功: `{"ERRORCODE":0, "RESULT":[{"fstype":"xfs","size":"1G","type":"data","vendor":"","model":"","uuid":"884c6eac-c69c-4133-bd85-5ff6a618af0c","serial":"","wwn":""}]}`
 
 
 ### 返回结果参数
 
 参数            | 参数说明
 ----------------|-------------------------------
+uuid            |文件系统uuid
+fstype          |文件系统格式
+size            |磁盘大小
+model           |磁盘型号
+vendor          |磁盘厂商
+serial          |磁盘序列号
+wwn             |全球唯一标识符
 
 
 ### 错误编码

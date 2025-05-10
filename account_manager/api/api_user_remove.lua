@@ -10,7 +10,7 @@ local APP_KEY_LIST = {
 }
 
 local sql_fmt = {
-	user_del = "DELETE FROM user_list WHERE username='%s' AND accepted=1",
+	user_del = "DELETE FROM user_list WHERE username='%s'",
 }
 
 local function check_args(args)

@@ -28,7 +28,7 @@
 ### 返回body示例
 
 * 失败: `{"ERRORCODE":10001, "RESULT":"internal error!"}`
-* 成功: `{"ERRORCODE":0,"RESULT":[]}`
+* 成功: `{"ERRORCODE":0, "RESULT":[{"save_time":"2025-05-10 09:26:09","username":"459032139@qq.com"}]}`
 
 
 ### 返回结果参数

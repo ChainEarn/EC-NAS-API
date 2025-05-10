@@ -11,6 +11,7 @@ set termencoding=utf-8
 set fileformats=unix
 EOF
 dnf install -y dmidecode rpm-build make gcc autoconf automake libtool pacman fakeroot lua-basexx luajit-devel shadow util-linux openssl pcp-system-tools net-tools libuuid-devel libdb-utils
+dnf install xfsprogs
 
 dnf install openresty openresty-opm
 opm get SkyLothar/lua-resty-jwt
@@ -23,6 +24,11 @@ dnf install mariadb-devel
 #mysql_secure_installation
 systemctl start mariadb
 
+
+dnf install git
+git config --global --add safe.directory `pwd`
+
+dnf install systemd-udev
 
 dnf localinstall ~/mergerfs-1.0.0-1.el9.x86_64.rpm
 dnf localinstall ~/csdo-1.0.0-4.7951c09.el9.x86_64.rpm

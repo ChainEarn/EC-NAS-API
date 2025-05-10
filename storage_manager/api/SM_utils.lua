@@ -40,6 +40,15 @@ local function token_check()
 	end
 end
 
+-- 辅助函数处理可能的NULL值
+local function json_sanitize(value)
+	if value == nil or (type(value) == "userdata" and value == cjson.null) then
+		return ""
+	else
+		return tostring(value)
+	end
+end
+
 local function get_one_disk(name)
 	local ok, info = sys.execute("/usr/bin/lsblk -d -o NAME,MODEL,VENDOR,UUID,SERIAL,WWN,SIZE,FSTYPE,FSSIZE,FSUSED,FSAVAIL,FSUSE% -J /dev/" .. name)
 	if not ok then
@@ -47,7 +56,11 @@ local function get_one_disk(name)
 		return nil
 	end
 	local top = cjson.decode(info)
-	return top["blockdevices"][1]
+	local out = top["blockdevices"][1]
+	for k, v in pairs(out) do
+		out[k] = json_sanitize(v)
+	end
+	return out
 end
 
 local function get_all_disk()

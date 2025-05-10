@@ -8,7 +8,7 @@ local basexx = require("basexx")
 local FM_utils = require('FM_utils')
 
 local sql_fmt = {
-	user_info = "SELECT password FROM user_list WHERE username='%s' AND accepted=1",
+	user_info = "SELECT password FROM user_list WHERE username='%s'",
 }
 
 local function handle()

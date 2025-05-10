@@ -28,7 +28,7 @@
 ### 返回body示例
 
 * 失败: `{"ERRORCODE":10001, "RESULT":"internal error!"}`
-* 成功: `{"ERRORCODE":0,"RESULT":"ok!"}`
+* 成功: `{"ERRORCODE":0, "RESULT":[{"fstype":"","uuid":"","fssize":"","name":"loop0","fsavail":"","fsuse%":"","fsused":"","vendor":"","model":"","size":"1G","serial":"","wwn":""},{"fstype":"","uuid":"","fssize":"","name":"zram0","fsavail":"","fsuse%":"","fsused":"","vendor":"","model":"","size":"8G","serial":"","wwn":""},{"fstype":"","uuid":"","fssize":"","name":"nvme0n1","fsavail":"","fsuse%":"","fsused":"","vendor":"","model":"YMTC PC411-1TB-B                        ","size":"953.9G","serial":"YMA51T0KA2502502XW  ","wwn":""}]}`
 
 
 ### 返回结果参数
@@ -41,6 +41,7 @@ size            |磁盘大小
 model           |磁盘型号
 vendor          |磁盘厂商
 serial          |磁盘序列号
+wwn             |全球唯一标识符
 
 ### 错误编码
 

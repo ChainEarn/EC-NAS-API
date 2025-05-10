@@ -8,18 +8,21 @@ fi
 if [ "$1" = "start" ]; then
 	systemctl start csdod
 	systemctl start mariadb
+	systemctl start systemd-udevd
 	systemctl start openresty
 	exit 0
 fi
 if [ "$1" = "stop" ]; then
 	systemctl stop csdod
 	systemctl stop mariadb
+	systemctl stop systemd-udevd
 	systemctl stop openresty
 	exit 0
 fi
 if [ "$1" = "restart" ]; then
 	systemctl restart csdod
 	systemctl restart mariadb
+	systemctl restart systemd-udevd
 	systemctl restart openresty
 	exit 0
 fi
