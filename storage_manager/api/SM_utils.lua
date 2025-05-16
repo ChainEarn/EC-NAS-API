@@ -161,7 +161,7 @@ local function data_pool_apply(list)
 	end
 	local disks = table.concat(mounts, ":")
 	os.execute("/usr/bin/csdo /usr/bin/mkdir -p /nfs")
-	local cmd = string.format("/usr/bin/csdo /usr/bin/mergerfs -o allow_other,use_ino,cache.files=partial,dropcacheonclose=true,category.create=mfs %s /nfs", disks)
+	local cmd = string.format("/usr/bin/csdo /usr/bin/mergerfs -o defaults,allow_other,use_ino,cache.files=off,dropcacheonclose=true,category.create=mfs,minfreespace=64M %s /nfs", disks)
 	local ok, info = sys.execute(cmd)
 	if not ok then
 		only.log('E', 'mergerfs failed:%s!', info)
