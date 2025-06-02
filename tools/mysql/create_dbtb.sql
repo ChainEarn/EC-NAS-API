@@ -20,6 +20,7 @@ CREATE TABLE disk_list (
     wwn VARCHAR(128) NOT NULL,
     size VARCHAR(32) NOT NULL,
     fstype VARCHAR(12) NOT NULL,
+    devtype VARCHAR(12) NOT NULL,
     type VARCHAR(32) NOT NULL
 );
 

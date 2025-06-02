@@ -16,16 +16,17 @@
  参数           |参数说明                 |  类型       |   示例         |是否允许为空|  限制条件
 ----------------|-------------------------|-------------|----------------|------------|---------------------
 dev             |设备名称                 |字符串       | nvme0n2        |否          |无
+devtype         |设备类型                 |字符串       | IMG            |否          |BLK/IMG/VHD
 
 ### 示例代码
 
     POST /storageManager/v1/poolDiskAppend HTTP/1.0
     Host:127.0.0.1:8090
-    Content-Length:17
+    Content-Length:33
     Content-Type:application/json
     Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc4MTc2MzJ9.SxT8X-7Xg0-ei17G1HtKzbB2ADR-TaVwOX7I0-PLCw4
 
-    {"dev":"nvme0n2"}
+    {"dev":"nvme0n2","devtype":"IMG"}
 
 ### 返回body示例
 

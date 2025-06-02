@@ -89,6 +89,7 @@ echo "./tools/mysql/create_dbtb.sql /opt/omstor/EC-NAS-API/tools/mysql/" >> debi
 echo "./tools/mysql/create_user.sql /opt/omstor/EC-NAS-API/tools/mysql/" >> debian/install
 echo "./tools/mysql/init.sh /opt/omstor/EC-NAS-API/tools/mysql/" >> debian/install
 echo "./tools/ec_nas_api.sh /opt/omstor/EC-NAS-API/tools/" >> debian/install
+echo "./tools/prepare_loop_device.sh /opt/omstor/EC-NAS-API/tools/" >> debian/install
 
 # 修改 debian/rules 文件
 sed -i '/dh \$@/d' debian/rules

@@ -7,7 +7,7 @@ local mysql_api = require('mysql_pool_api')
 
 local sql_fmt = {
 	disk_list = "SELECT * FROM disk_list",
-	disk_append = "INSERT INTO disk_list (uuid, model, vendor, serial, wwn, size, fstype, type) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE type = VALUES(type);",
+	disk_append = "INSERT INTO disk_list (uuid, model, vendor, serial, wwn, size, fstype, devtype, type) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s') ON DUPLICATE KEY UPDATE type = VALUES(type);",
 }
 
 local function handle()
@@ -24,6 +24,17 @@ local function handle()
 		gosay.out_message(MSG.fmt_err_message("MSG_ERROR_REQ_ARGS"))
 		return
 	end
+	local devtype = res["devtype"]
+	if not devtype then
+		gosay.out_message(MSG.fmt_err_message("MSG_ERROR_REQ_ARGS"))
+		return
+	end
+	if string.upper(devtype) ~= "BLK" and string.upper(devtype) ~= "IMG" and string.upper(devtype) ~= "VHD" then
+		gosay.out_message(MSG.fmt_err_message("MSG_ERROR_REQ_ARGS"))
+		return
+	end
+
+	--> disk preprocessing
 	os.execute("/usr/bin/csdo /usr/bin/umount /dev/" .. dev)
 	local uuid = SM_utils.get_disk_uuid(dev)
 	local fstype = SM_utils.get_disk_fstype(dev)
@@ -42,7 +53,7 @@ local function handle()
 		gosay.out_message(MSG.fmt_err_message("MSG_ERROR_SYSTEM"))
 		return
 	end
-	local sql = string.format(sql_fmt["disk_append"], uuid, res["model"], res["vendor"], res["serial"], res["wwn"], res["size"], fstype or res["fstype"], "data")
+	local sql = string.format(sql_fmt["disk_append"], uuid, res["model"], res["vendor"], res["serial"], res["wwn"], res["size"], fstype or res["fstype"], devtype, "data")
 	local ok, res = mysql_api.cmd('omstor___omstor_db', 'INSERT', sql)
 	if not ok then
 		only.log('E','insert mysql failed!')

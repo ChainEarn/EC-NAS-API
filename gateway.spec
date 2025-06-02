@@ -96,8 +96,9 @@ install -Dm 0644 open/lib/sys.lua %{buildroot}/opt/omstor/EC-NAS-API/open/lib/sy
 mkdir -p %{buildroot}/opt/omstor/EC-NAS-API/tools/mysql
 install -Dm 0644 tools/mysql/create_dbtb.sql %{buildroot}/opt/omstor/EC-NAS-API/tools/mysql/create_dbtb.sql
 install -Dm 0644 tools/mysql/create_user.sql %{buildroot}/opt/omstor/EC-NAS-API/tools/mysql/create_user.sql
-install -Dm 0644 tools/mysql/init.sh %{buildroot}/opt/omstor/EC-NAS-API/tools/mysql/init.sh
-install -Dm 0644 tools/ec_nas_api.sh %{buildroot}/opt/omstor/EC-NAS-API/tools/ec_nas_api.sh
+install -Dm 0755 tools/mysql/init.sh %{buildroot}/opt/omstor/EC-NAS-API/tools/mysql/init.sh
+install -Dm 0755 tools/ec_nas_api.sh %{buildroot}/opt/omstor/EC-NAS-API/tools/ec_nas_api.sh
+install -Dm 0755 tools/prepare_loop_device.sh %{buildroot}/opt/omstor/EC-NAS-API/tools/prepare_loop_device.sh
 
 %post
 # TODO: need save
@@ -105,12 +106,13 @@ cp -f /opt/data/etc/my.cnf.d/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 cp -f /opt/data/usr/local/openresty/nginx/conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 %preun
-rm -rf /opt/omstor/EC-NAS-API
 
 %postun
 # $1为0是卸载，1为更新
 if [ "$1" = "0" ] ; then
-	rm -rf /opt/omstor/EC-NAS-API
+	echo "Remove cleanup done!"
+else
+	echo "Upgrade cleanup done!"
 fi
 
 %files
@@ -119,6 +121,7 @@ fi
 /opt/data/usr/local/openresty/nginx/conf/nginx.conf
 /usr/sbin/boot-setup.sh
 /usr/lib/systemd/system/boot-setup.service
+/opt/omstor/EC-NAS-API
 /opt/omstor/EC-NAS-API/cfg.lua
 /opt/omstor/EC-NAS-API/account_manager/api/AM_utils.lua
 /opt/omstor/EC-NAS-API/account_manager/api/api_admin_login.lua
@@ -188,6 +191,7 @@ fi
 /opt/omstor/EC-NAS-API/tools/mysql/create_user.sql
 /opt/omstor/EC-NAS-API/tools/mysql/init.sh
 /opt/omstor/EC-NAS-API/tools/ec_nas_api.sh
+/opt/omstor/EC-NAS-API/tools/prepare_loop_device.sh
 
 %changelog
 
