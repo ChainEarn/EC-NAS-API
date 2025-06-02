@@ -5,7 +5,7 @@ apt-get update
 apt-get -y install openresty
 opm get SkyLothar/lua-resty-jwt
 opm get fffonion/lua-resty-openssl
-opm get agentzh/lua-resty-http
+opm get ledgetech/lua-resty-http
 opm get GUI/lua-resty-mail
 
 apt-get -y install dmidecode make gcc autoconf automake libtool pacman lua-basexx luajit2 libluajit2-5.1-dev uuid-dev

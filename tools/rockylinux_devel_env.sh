@@ -16,7 +16,7 @@ dnf install xfsprogs
 dnf install openresty openresty-opm
 opm get SkyLothar/lua-resty-jwt
 opm get fffonion/lua-resty-openssl
-opm get agentzh/lua-resty-http
+opm get ledgetech/lua-resty-http
 opm get GUI/lua-resty-mail
 
 dnf install mariadb-server
