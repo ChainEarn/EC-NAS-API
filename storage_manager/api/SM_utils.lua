@@ -46,7 +46,7 @@ local function json_sanitize(value)
 	if value == nil or (type(value) == "userdata" and value == cjson.null) then
 		return ""
 	else
-		return tostring(value)
+		return value
 	end
 end
 
@@ -114,7 +114,7 @@ local function get_one_disk(name)
 	local top = cjson.decode(info)
 	local out = top["blockdevices"][1]
 	for k, v in pairs(out) do
-		out[k] = json_sanitize(v)
+		out[k] = tostring(json_sanitize(v))
 	end
 	return out
 end
