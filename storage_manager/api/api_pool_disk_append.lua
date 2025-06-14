@@ -39,7 +39,7 @@ local function handle()
 	local uuid = SM_utils.get_disk_uuid(dev)
 	local fstype = SM_utils.get_disk_fstype(dev)
 	if not uuid or not fstype then
-		local cmd = string.format([[/usr/bin/csdo /usr/sbin/parted -s /dev/%s unit s print |/usr/bin/grep -E '^ ?[1-9]+' |/usr/bin/awk '{print $1}' | while read PART; do /usr/bin/echo "Removing partition $PART on %s"; /usr/sbin/parted -s %s rm $PART; done]], dev, dev, dev)
+		local cmd = string.format([[/usr/bin/csdo /usr/sbin/parted -s "/dev/%s" unit s print |/usr/bin/grep -E '^ *[0-9]+' |/usr/bin/awk '{print $1}' | tac | while read PART; do /usr/bin/echo "Removing partition $PART on /dev/%s"; /usr/sbin/parted -s "/dev/%s" rm "$PART"; done]], dev, dev, dev)
 		os.execute(cmd)
 		os.execute("/usr/bin/csdo /usr/sbin/mkfs.xfs -f -s size=4096 /dev/" .. dev)
 		os.execute("/usr/bin/udevadm trigger")
