@@ -24,8 +24,3 @@ apt-get install dh-systemd
 apt-get install net-tools
 
 
-dpkg -i ~/omstor-gateway_1.0.0-1_amd64.deb
-/opt/omstor/EC-NAS-API/tools/mysql/init.sh
-
-systemctl daemon-reload
-systemctl enable --now boot-setup

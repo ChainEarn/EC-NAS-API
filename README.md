@@ -20,12 +20,14 @@ Use the corresponding script depending on your Linux distribution:
 ### Fedora
 
 ```bash
+/bin/bash tools/rockylinux_devel_env.sh
 /bin/bash pkg_rpm.sh
 ````
 
 ### Ubuntu
 
 ```bash
+/bin/bash tools/ubuntu_devel_env.sh
 /bin/bash pkg_deb.sh
 ```
 
@@ -36,19 +38,30 @@ Use the corresponding script depending on your Linux distribution:
 ### On Fedora:
 
 ```bash
-dnf install openresty
-dnf install ./ec_nas_api*.rpm
+/bin/bash tools/rockylinux_release_env.sh
+dnf install -y ./csdo*.rpm
+dnf install -y ./mergerfs*.rpm
+dnf install -y ./ec_nas_api*.rpm
 /opt/omstor/EC-NAS-API/tools/mysql/init.sh
 /opt/omstor/EC-NAS-API/tools/ec_nas_api.sh start
+
+dnf install -y ./boot-setup*.rpm
+systemctl daemon-reload
+systemctl enable --now boot-setup
 ```
 
 ### On Ubuntu:
 
 ```bash
-apt-get install openresty
-apt-get install ./ec_nas_api*.deb
+/bin/bash tools/ubuntu_release_env.sh
+apt-get install -y ./csdo*.deb
+apt-get install -y ./ec_nas_api*.deb
 /opt/omstor/EC-NAS-API/tools/mysql/init.sh
 /opt/omstor/EC-NAS-API/tools/ec_nas_api.sh start
+
+apt-get install -y ./boot-setup*.deb
+systemctl daemon-reload
+systemctl enable --now boot-setup
 ```
 
 ---
@@ -58,15 +71,17 @@ apt-get install ./ec_nas_api*.deb
 * OpenResty >= 1.21
 * Lua scripting support (provided by OpenResty)
 
+* csdo
+* get from https://github.com/vgfree/csdo.git
 ---
 
 ## 📁 Project Structure (optional)
 
 ```
 EC-NAS-Gateway-API/
-├── account_manager/     # account manager
-├── fsystem_manager/     # file system manager
-├── storage_manager/     # storage manager
+├── account_manager/     # Account manager
+├── fsystem_manager/     # File system manager
+├── storage_manager/     # Storage manager
 ├── pkg_deb.sh           # Packaging script for Ubuntu
 ├── pkg_rpm.sh           # Packaging script for Fedora
 ├── README.md            # Project english documentation

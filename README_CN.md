@@ -19,12 +19,14 @@
 ### Fedora 系统
 
 ```bash
+/bin/bash tools/rockylinux_devel_env.sh
 /bin/bash pkg_rpm.sh
 ````
 
 ### Ubuntu 系统
 
 ```bash
+/bin/bash tools/ubuntu_devel_env.sh
 /bin/bash pkg_deb.sh
 ```
 
@@ -35,28 +37,41 @@
 ### Fedora 安装步骤：
 
 ```bash
-dnf install openresty
-dnf install ./ec_nas_api*.rpm
+/bin/bash tools/rockylinux_release_env.sh
+dnf install -y ./csdo*.rpm
+dnf install -y ./mergerfs*.rpm
+dnf install -y ./ec_nas_api*.rpm
 /opt/omstor/EC-NAS-API/tools/mysql/init.sh
 /opt/omstor/EC-NAS-API/tools/ec_nas_api.sh start
+
+dnf install -y ./boot-setup*.rpm
+systemctl daemon-reload
+systemctl enable --now boot-setup
 ```
 
 ### Ubuntu 安装步骤：
 
 ```bash
-apt-get install openresty
-apt-get install ./ec_nas_api*.deb
+/bin/bash tools/ubuntu_release_env.sh
+apt-get install -y ./csdo*.deb
+apt-get install -y ./ec_nas_api*.deb
 /opt/omstor/EC-NAS-API/tools/mysql/init.sh
 /opt/omstor/EC-NAS-API/tools/ec_nas_api.sh start
+
+apt-get install -y ./boot-setup*.deb
+systemctl daemon-reload
+systemctl enable --now boot-setup
 ```
 
 ---
 
 ## 🔧 依赖环境
 
-* OpenResty >= 1.21（需预先安装）
+* OpenResty >= 1.21
 * Lua 脚本解释支持（由 OpenResty 提供）
 
+* csdo
+* 源码在 https://github.com/vgfree/csdo.git
 ---
 
 ## 📁 目录结构示例（可选）

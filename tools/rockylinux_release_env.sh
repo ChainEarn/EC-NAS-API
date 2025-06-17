@@ -10,7 +10,7 @@ cat > ~/.vimrc << EOF
 set termencoding=utf-8
 set fileformats=unix
 EOF
-dnf install -y dmidecode rpm-build make gcc autoconf automake libtool pacman fakeroot lua-basexx luajit-devel shadow util-linux openssl pcp-system-tools net-tools libuuid-devel libdb-utils
+dnf install -y dmidecode
 dnf install -y xfsprogs
 
 dnf install -y openresty openresty-opm
@@ -24,8 +24,5 @@ dnf install -y mariadb-devel
 #mysql_secure_installation
 systemctl start mariadb
 
-
-dnf install -y git
-git config --global --add safe.directory `pwd`
 
 dnf install -y systemd-udev
