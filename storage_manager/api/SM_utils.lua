@@ -130,10 +130,16 @@ local function get_all_disk()
 	for _, sub in ipairs(top["blockdevices"]) do
 		local name = sub["name"]
 		local is_sys_block = false
-		for _, one in ipairs(sub["children"] or {}) do
-			for _, mnt in ipairs(one["mountpoints"] or {}) do
-				if mnt == "/boot" then
-					is_sys_block = true
+		local cmd = string.format([[/usr/sbin/fdisk -l /dev/%s | grep -q 'EFI System']], name)
+		local ok = sys.execute(cmd)
+		if ok then
+			is_sys_block = true
+		else
+			for _, one in ipairs(sub["children"] or {}) do
+				for _, mnt in ipairs(one["mountpoints"] or {}) do
+					if mnt == "/boot" then
+						is_sys_block = true
+					end
 				end
 			end
 		end
